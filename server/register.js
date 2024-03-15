@@ -2,8 +2,8 @@
 
 module.exports = ({ strapi }) => {
   strapi.customFields.register({
-    name: 'slug',
-    plugin: 'slug',
+    name: 'ab-custom-slug',
+    plugin: 'ab-custom-slug',
     type: 'string',
   });
 };
