@@ -1,6 +1,6 @@
 {
   "name": "ab-custom-slug",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Auto Generated rewritable Slug field (same for different locales).",
   "strapi": {
     "name": "ab-custom-slug",
