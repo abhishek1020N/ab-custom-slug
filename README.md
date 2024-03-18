@@ -1,4 +1,4 @@
-# Strapi plugin: slug
+# Strapi plugin::ab-custom-slug
 ---
 
 
