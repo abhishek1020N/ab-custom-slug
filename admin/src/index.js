@@ -12,7 +12,7 @@ export default {
     app.customFields.register({
       name: "ab-custom-slug",
       pluginId: "ab-custom-slug",
-      type: "string",
+      type: "text",
       intlLabel: {
         id: "ab-custom-slug.title",
         defaultMessage: "Slug",

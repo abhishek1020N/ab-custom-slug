@@ -28,11 +28,11 @@ const Input = ({ name, value, intlLabel, attribute }) => {
       return;
     }
 
-    setSlug(slugify(modifiedData[targetField], "-"));
+    setSlug(encodeURIComponent(modifiedData[targetField], "-"));
     onChange({
       target: {
         name,
-        value: slugify(modifiedData[targetField], "-"),
+        value: encodeURIComponent(modifiedData[targetField], "-"),
         type: "text",
       },
     });
@@ -53,7 +53,7 @@ const Input = ({ name, value, intlLabel, attribute }) => {
   };
 
   const modifySlugAndData = (value) => {
-    const sluggifiedValue = slugify(value, "-");
+    const sluggifiedValue = encodeURIComponent(value, "-");
 
     setSlug(sluggifiedValue);
     onChange({ target: { name, value: sluggifiedValue, type: "text" } });
@@ -73,11 +73,13 @@ const Input = ({ name, value, intlLabel, attribute }) => {
           onChange={(e) => changeInputField(e.target.value)}
           endAction={
             <Stack horizontal spacing={2}>
-              <FieldAction label="regenerate">
-                <Refresh
-                  onClick={() => changeInputField(modifiedData[targetField])}
-                />
-              </FieldAction>
+              <div style={{ backgroundColor: '#4945ff', padding: '2px', borderRadius: '4px' }}>
+                  <FieldAction label="regenerate" >
+                    <Refresh 
+                      onClick={() => changeInputField(modifiedData[targetField])}
+                    />
+                  </FieldAction>
+                </div>
             </Stack>
           }
         />
