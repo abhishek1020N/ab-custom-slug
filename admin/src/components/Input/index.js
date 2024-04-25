@@ -14,7 +14,7 @@ import slugify from "../../utils/slugify";
 
 const Input = ({ name, value, intlLabel, attribute }) => {
   const targetField = attribute.options?.targetField;
-
+  const theme = localStorage.getItem("STRAPI_THEME");
   const { modifiedData, onChange } = useCMEditViewDataManager();
   const [slug, setSlug] = useState(value);
   const [isModified, setIsModified] = useState(false);
@@ -73,13 +73,18 @@ const Input = ({ name, value, intlLabel, attribute }) => {
           onChange={(e) => changeInputField(e.target.value)}
           endAction={
             <Stack horizontal spacing={2}>
-              <div style={{ backgroundColor: '#4945ff', padding: '2px', borderRadius: '4px' }}>
-                  <FieldAction label="regenerate" >
-                    <Refresh 
-                      onClick={() => changeInputField(modifiedData[targetField])}
-                    />
-                  </FieldAction>
-                </div>
+              <div
+                style={{
+                  backgroundColor:
+                    theme === "light" ? "" : "rgb(240, 240, 255)",
+                }}
+              >
+                <FieldAction label="regenerate">
+                  <Refresh
+                    onClick={() => changeInputField(modifiedData[targetField])}
+                  />
+                </FieldAction>
+              </div>
             </Stack>
           }
         />
