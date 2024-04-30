@@ -1,7 +1,7 @@
 # Strapi plugin::ab-custom-slug
 ---
 
-Slug/UID is generated based on the tagrget field that is selected on the field creation screen.
+Slug/UID is generated based on the target field that is selected on the field creation screen.
 
 
 
@@ -18,6 +18,8 @@ Once installed go to content-type-builder
 and add a field to any collection type.
 In the Custom fields section you will find the Slug field.
 ```
-![Alt text](image-1.png)
 
-![Alt text](image.png)
+Screenshots for the reference:
+![Alt text](assets/image-1.png)
+![Alt text](assets/image.png)
+![Alt text](assets/image_3.png)
