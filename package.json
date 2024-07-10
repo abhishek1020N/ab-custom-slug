@@ -13,9 +13,6 @@
     "url": "https://github.com/abhishek1020N/ab-custom-slug"
   },
   "devDependencies": {},
-  "peerDependencies": {
-    "@strapi/strapi": "^4.6.1"
-  },
   "author": "Abhishek Naik",
   "engines": {
     "node": ">=14.19.1 <=18.x.x",
