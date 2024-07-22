@@ -10,7 +10,6 @@ import {
 
 import { Stack } from "@strapi/design-system/Stack";
 import Refresh from "@strapi/icons/Refresh";
-import slugify from "../../utils/slugify";
 
 const Input = ({ name, value, intlLabel, attribute }) => {
   const targetField = attribute.options?.targetField;
@@ -79,11 +78,15 @@ const Input = ({ name, value, intlLabel, attribute }) => {
                     theme === "light" ? "" : "rgb(240, 240, 255)",
                 }}
               >
-                <FieldAction label="regenerate">
-                  <Refresh
-                    onClick={() => changeInputField(modifiedData[targetField])}
-                  />
-                </FieldAction>
+                {targetField ? (
+                  <FieldAction label="regenerate">
+                    <Refresh
+                      onClick={() =>
+                        changeInputField(modifiedData[targetField])
+                      }
+                    />
+                  </FieldAction>
+                ) : null}
               </div>
             </Stack>
           }
