@@ -27,11 +27,11 @@ const Input = ({ name, value, intlLabel, attribute }) => {
       return;
     }
 
-    setSlug(encodeURIComponent(modifiedData[targetField], "-"));
+    setSlug(encodeURIComponent(modifiedData[targetField]?.toLowerCase(), "-"));
     onChange({
       target: {
         name,
-        value: encodeURIComponent(modifiedData[targetField], "-"),
+        value: encodeURIComponent(modifiedData[targetField]?.toLowerCase(), "-"),
         type: "text",
       },
     });
@@ -43,7 +43,7 @@ const Input = ({ name, value, intlLabel, attribute }) => {
     }
 
     setIsModified(false);
-    modifySlugAndData(modifiedData[targetField]);
+    modifySlugAndData(modifiedData[targetField]?.toLowerCase());
   }, [modifiedData]);
 
   const changeInputField = (value) => {
@@ -52,7 +52,7 @@ const Input = ({ name, value, intlLabel, attribute }) => {
   };
 
   const modifySlugAndData = (value) => {
-    const sluggifiedValue = encodeURIComponent(value, "-");
+    const sluggifiedValue = encodeURIComponent(value?.toLowerCase(), "-");
 
     setSlug(sluggifiedValue);
     onChange({ target: { name, value: sluggifiedValue, type: "text" } });
