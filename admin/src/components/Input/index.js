@@ -7,13 +7,28 @@ import {
   FieldLabel,
   FieldError,
 } from "@strapi/design-system/Field";
-
+import styled from "styled-components";
 import { Stack } from "@strapi/design-system/Stack";
 import Refresh from "@strapi/icons/Refresh";
 
+export const FieldActionWrapper = styled(FieldAction)`
+  svg {
+    height: 1rem;
+    width: 1rem;
+    path {
+      fill: ${({ theme }) => theme.colors.neutral400};
+    }
+  }
+
+  svg:hover {
+    path {
+      fill: ${({ theme }) => theme.colors.primary600};
+    }
+  }
+`;
+
 const Input = ({ name, value, intlLabel, attribute }) => {
   const targetField = attribute.options?.targetField;
-  const theme = localStorage.getItem("STRAPI_THEME");
   const { modifiedData, onChange } = useCMEditViewDataManager();
   const [slug, setSlug] = useState(value);
   const [isModified, setIsModified] = useState(false);
@@ -27,14 +42,7 @@ const Input = ({ name, value, intlLabel, attribute }) => {
       return;
     }
 
-    setSlug(encodeURIComponent(modifiedData[targetField]?.toLowerCase(), "-"));
-    onChange({
-      target: {
-        name,
-        value: encodeURIComponent(modifiedData[targetField]?.toLowerCase(), "-"),
-        type: "text",
-      },
-    });
+    modifySlugAndData(modifiedData[targetField]);
   }, []);
 
   useEffect(() => {
@@ -43,7 +51,7 @@ const Input = ({ name, value, intlLabel, attribute }) => {
     }
 
     setIsModified(false);
-    modifySlugAndData(modifiedData[targetField]?.toLowerCase());
+    modifySlugAndData(modifiedData[targetField]);
   }, [modifiedData]);
 
   const changeInputField = (value) => {
@@ -52,7 +60,7 @@ const Input = ({ name, value, intlLabel, attribute }) => {
   };
 
   const modifySlugAndData = (value) => {
-    const sluggifiedValue = encodeURIComponent(value?.toLowerCase(), "-");
+    const sluggifiedValue = encodeURI(value?.toLowerCase());
 
     setSlug(sluggifiedValue);
     onChange({ target: { name, value: sluggifiedValue, type: "text" } });
@@ -68,26 +76,15 @@ const Input = ({ name, value, intlLabel, attribute }) => {
           label="slug"
           name="slug"
           value={slug}
-          onBlur={() => changeInputField(slug)}
-          onChange={(e) => changeInputField(e.target.value)}
           endAction={
             <Stack horizontal spacing={2}>
-              <div
-                style={{
-                  backgroundColor:
-                    theme === "light" ? "" : "rgb(240, 240, 255)",
-                }}
-              >
-                {targetField ? (
-                  <FieldAction label="regenerate">
-                    <Refresh
-                      onClick={() =>
-                        changeInputField(modifiedData[targetField])
-                      }
-                    />
-                  </FieldAction>
-                ) : null}
-              </div>
+              {targetField ? (
+                <FieldActionWrapper label="regenerate">
+                  <Refresh
+                    onClick={() => changeInputField(modifiedData[targetField])}
+                  />
+                </FieldActionWrapper>
+              ) : null}
             </Stack>
           }
         />
