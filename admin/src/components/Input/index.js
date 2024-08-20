@@ -76,6 +76,8 @@ const Input = ({ name, value, intlLabel, attribute }) => {
           label="slug"
           name="slug"
           value={slug}
+          onBlur={() => changeInputField(slug)}
+          onChange={(e) => changeInputField(e.target.value)}
           endAction={
             <Stack horizontal spacing={2}>
               {targetField ? (
