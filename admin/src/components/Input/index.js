@@ -10,6 +10,7 @@ import {
 import styled from "styled-components";
 import { Stack } from "@strapi/design-system/Stack";
 import Refresh from "@strapi/icons/Refresh";
+import slugify from '@sindresorhus/slugify';
 
 export const FieldActionWrapper = styled(FieldAction)`
   svg {
@@ -60,7 +61,7 @@ const Input = ({ name, value, intlLabel, attribute }) => {
   };
 
   const modifySlugAndData = (value) => {
-    const sluggifiedValue = encodeURI(value?.toLowerCase());
+    const sluggifiedValue = encodeURI(slugify(value));
 
     setSlug(sluggifiedValue);
     onChange({ target: { name, value: sluggifiedValue, type: "text" } });
