@@ -29,14 +29,14 @@ const slugify = (str, delimiter) => {
 
     processedStr = processedStr
       .toLowerCase()
-      .replace(/&/g, " and ")
-      .replace(/@/g, " at ")
-      .replace(/'/g, "")
-      .replace(/#+([a-zA-Z0-9_]+)/gi, "hashtag $&")
-      .replace(/#([0-9]\d*)/g, "number $&")
+      .replace(/&/g, "-and-")
+      .replace(/@/g, "-at-")
+      .replace(/'/g, "-")
+      .replace(/#+([a-zA-Z0-9_]+)/gi, "hashtag-$&")
+      .replace(/#([0-9]\d*)/g, "number-$&")
       .replace("hashtag number", "number")
       .replace(/--+/g, " ")
-      .replace(/[^a-zA-Z0-9_\u3400-\u9FBF\s-]/g, " ")
+      .replace(/[^a-zA-Z0-9_\u3400-\u9FBF\s-]/g, "-")
       .replace(/\s+/g, delimiter)
       .replace(new RegExp(`^${escapedDelimiter}+`), "")
       .replace(new RegExp(`${escapedDelimiter}+$`), "");
