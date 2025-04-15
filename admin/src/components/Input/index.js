@@ -28,67 +28,46 @@ export const FieldActionWrapper = styled(FieldAction)`
   }
 `;
 
-const Input = ({ name, value, intlLabel, attribute }) => {
-  const targetField = attribute.options?.targetField;
+const Input = ({ name, value, intlLabel, attribute, required }) => {
+  const targetField = attribute?.options?.targetField;
   const { modifiedData, onChange } = useCMEditViewDataManager();
-  const [slug, setSlug] = useState(value);
-  const [isModified, setIsModified] = useState(false);
+  const [slug, setSlug] = useState(value || "");
 
   useEffect(() => {
-    if (
-      !modifiedData ||
-      !modifiedData[targetField] ||
-      value !== modifiedData[targetField]
-    ) {
-      return;
+    if (!value && targetField && modifiedData?.[targetField]) {
+      const initialSlug = encodeURI(slugify(modifiedData[targetField]));
+      setSlug(initialSlug);
+      onChange({ target: { name, value: initialSlug, type: "text" } });
     }
+  }, [value, targetField, modifiedData]);
 
-    modifySlugAndData(modifiedData[targetField]);
-  }, []);
-
-  useEffect(() => {
-    if (!modifiedData || !modifiedData[targetField] || isModified) {
-      return;
-    }
-
-    setIsModified(false);
-    modifySlugAndData(modifiedData[targetField]);
-  }, [modifiedData]);
-
-  const changeInputField = (value) => {
-    setIsModified(true);
-    modifySlugAndData(value);
+  const updateSlug = (newValue) => {
+    const sluggified = encodeURI(slugify(newValue));
+    setSlug(sluggified);
+    onChange({ target: { name, value: sluggified, type: "text" } });
   };
 
-  const modifySlugAndData = (value) => {
-    const sluggifiedValue = encodeURI(slugify(value));
-
-    setSlug(sluggifiedValue);
-    onChange({ target: { name, value: sluggifiedValue, type: "text" } });
+  const handleChange = (e) => {
+    setSlug(e.target.value);
+    onChange({ target: { name, value: e.target.value, type: "text" } });
   };
 
   return (
     <Stack spacing={1}>
-      <Field name="slug" error={!slug ? "Slug is required" : null}>
-        <FieldLabel required={attribute.required}>
-          {intlLabel?.defaultMessage}
+      <Field name={name} error={!slug && required ? "Slug is required" : null}>
+        <FieldLabel required={attribute?.required}>
+          {intlLabel?.defaultMessage || name}
         </FieldLabel>
         <FieldInput
-          label="slug"
-          name="slug"
+          name={name}
           value={slug}
-          onBlur={() => changeInputField(slug)}
-          onChange={(e) => changeInputField(e.target.value)}
+          onChange={handleChange}
           endAction={
-            <Stack horizontal spacing={2}>
-              {targetField ? (
-                <FieldActionWrapper label="regenerate">
-                  <Refresh
-                    onClick={() => changeInputField(modifiedData[targetField])}
-                  />
-                </FieldActionWrapper>
-              ) : null}
-            </Stack>
+            targetField ? (
+              <FieldActionWrapper label="Regenerate">
+                <Refresh onClick={() => updateSlug(modifiedData?.[targetField] || "")} />
+              </FieldActionWrapper>
+            ) : null
           }
         />
         <FieldError />
