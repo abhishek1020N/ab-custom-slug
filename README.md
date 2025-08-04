@@ -1,6 +1,8 @@
 # Strapi plugin::ab-custom-slug
 ---
 
+**** ONLY V4. ****
+
 Slug/UID is generated based on the target field that is selected on the field creation screen.
 
 
